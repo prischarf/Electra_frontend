@@ -3,39 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alerta Stock Río Grande</title>
-  <link rel="stylesheet" href="css/stock-rio-grande.css">
+  <title>Alerta Stock Softland</title>
+  <link rel="stylesheet" href="css/Form_Stock_Softand.css">
 </head>
 <body>
   <header class="header">
-    <img src="imagenes/aires-del-sur-softland.png" alt="ACS AiresDelSur" class="logo">
+    <img src="Imagenes/Logo_ADS.png" alt="ACS AiresDelSur" class="logo">
     
     <div class="usuario-container">
-      <img src="imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
+      <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
       <div class="menu-usuario" id="menuUsuario">
-        <a href="index.html" id="cerrarSesion">Cerrar sesión</a>
+        <a href="Index.html" id="cerrarSesion">Cerrar sesión</a>
       </div>
     </div>
   </header>
 
   <main class="contenedor">
-    <h1>Alerta Stock Río Grande</h1>
-    <p>Configura los parámetros del reporte.</p>
+    <h1>Nombre Reporte</h1>
+    <p>Propósito del reporte.</p>
 
-    <form id="form-stock-rg" class="formulario">
-      <label for="destinatarios">Destinatarios:</label>
-      <input type="text" id="destinatarios" placeholder="Ingrese emails válidos">
+    <form id="form-softland" class="formulario">
+      <label for="destinatario">Destinatarios:</label>
+      <input type="text" id="destinatario" placeholder="Ingrese emails válidos">
       <small>(emails separados por coma)</small>
 
-      <label for="stockDepositoRg">
-        <input type="checkbox" id="stockDepositoRg"> ¿Stock en depósito Río Grande?
-      </label>
-
-      <label for="equiposMes">
-        <input type="checkbox" id="equiposMes"> ¿Equipos del mes?
-      </label>
+      <label>Seleccione 1 o más reportes:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox"> Opción 1</label>
+        <label><input type="checkbox"> Opción 2</label>
+      </div>
 
       <div class="fecha-group">
+        <label for="stockDeposito">
+          <input type="checkbox" id="stockDeposito"> ¿Stock en depósito?
+        </label>
+
         <div class="fecha-item">
           <label for="dia">Día:</label>
           <select id="dia">
@@ -139,6 +141,11 @@
   <script>
     document.getElementById('usuarioIcono').addEventListener('click', function () {
       document.getElementById('menuUsuario').classList.toggle('visible');
+    });
+
+    document.getElementById('form-softland').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      // Código de la API para enviar el reporte
     });
   </script>
 </body>
