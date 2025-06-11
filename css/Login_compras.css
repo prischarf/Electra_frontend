@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4faff;
+}
+
+.pagina-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.header-login {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 30px;
+}
+
+.logo-acs {
+  max-width: 120px;
+  height: auto;
+}
+
+.titulo-sistema {
+  font-size: 1.5em;
+  color: #426dad;
+  font-weight: bold;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 900px;
+}
+
+.login-box {
+  display: flex;
+  background-color: #f4faff;
+  border: 1px solid #d3e2ed;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  padding: 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.icono-usuario {
+  max-width: 250px;
+  height: auto;
+}
+
+.login-right {
+  flex: 1;
+  padding-left: 40px;
+}
+
+.login-right h1 {
+  margin-bottom: 20px;
+  font-size: 1.8em;
+  color: #222;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.btn-acceder {
+  width: 100%;
+  background-color: #4376d1;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-acceder:hover {
+  background-color: #335eb4;
+}
+
+.olvide {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.9em;
+  color: #2b59c3;
+  text-decoration: none;
+}
+
+.olvide:hover {
+  text-decoration: underline;
+}
+
+.btn-volver {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4376d1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-volver:hover {
+  background-color: #335eb4;
+}
