@@ -26,11 +26,9 @@ body, html {
 }
 
 .logo-acs {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  max-width: 120px;
-  z-index: 1000;
+  height: 40px;
+  max-width: 150px;
+  object-fit: contain;
 }
 
 
