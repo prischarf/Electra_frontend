@@ -26,24 +26,19 @@ body {
 }
 
 .logo {
-  height: 40px;
-  max-width: 150px;
-  object-fit: contain;
-}
-
-.contenido {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 50px;
 }
 
 h2 {
+  align-self: center; /* 📌 Esto mantiene el "¡Bienvenido!" a la izquierda */
+  text-align: left;
+  width: 100%; /* Para que ocupe el ancho disponible */
   font-size: 32px;
-  margin: 0 0 10px;
+  margin-bottom: 10px;
 }
 
 p {
-  font-size: 16px;
+  font-size: 20px;
   max-width: 500px;
 }
 
@@ -125,71 +120,5 @@ p {
   max-height: 100%;
 }
 
-/* Responsive para tablets y móviles */
-@media (max-width: 992px) {
-  .contenedor {
-    flex-direction: column;
-  }
 
-  .columna-izquierda,
-  .columna-derecha {
-    padding: 30px 20px;
-  }
 
-  .encabezado {
-    position: static;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .logo {
-    height: 35px;
-  }
-
-  h2 {
-    font-size: 28px;
-    text-align: center;
-  }
-
-  p {
-    text-align: center;
-  }
-
-  .botones {
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
-
-  .boton {
-    justify-content: center;
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .imagen-placeholder {
-    width: 100%;
-    height: auto;
-    opacity: 1;
-    margin-top: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  h2 {
-    font-size: 24px;
-  }
-
-  p {
-    font-size: 14px;
-  }
-
-  .boton {
-    font-size: 14px;
-    padding: 10px 20px;
-  }
-
-  .flecha {
-    font-size: 16px;
-  }
-}
