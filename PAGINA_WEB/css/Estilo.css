@@ -1,24 +1,32 @@
-body {
+/* Reset general */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #d9f2ff;
   color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
 }
 
+/* Contenedor principal */
 .contenedor {
   display: flex;
-  min-height: 100vh;
-}
-
-.columna-izquierda {
-  flex: 1;
-  padding: 60px;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  position: relative;
+  align-items: center;
+  width: 90%;
+  max-width: 800px;
 }
 
+/* Logo en la esquina superior izquierda */
 .encabezado {
   position: absolute;
   top: 20px;
@@ -26,26 +34,37 @@ body {
 }
 
 .logo {
-  height: 50px;
+  height: 40px;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+/* Contenido totalmente centrado */
+.contenido {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Centra el contenido */
+  width: 100%;
+  margin-top: 50px;
 }
 
 h2 {
-  align-self: center; /* 📌 Esto mantiene el "¡Bienvenido!" a la izquierda */
-  text-align: left;
-  width: 100%; /* Para que ocupe el ancho disponible */
   font-size: 32px;
   margin-bottom: 10px;
 }
 
 p {
-  font-size: 20px;
+  font-size: 16px;
   max-width: 500px;
 }
 
+/* Botones totalmente centrados */
 .botones {
   margin-top: 30px;
   display: flex;
   gap: 20px;
+  justify-content: center;
 }
 
 .boton {
@@ -56,8 +75,10 @@ p {
   font-size: 16px;
   display: flex;
   align-items: center;
+  justify-content: center; /* Centra los botones */
   gap: 10px;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 200px;
 }
 
 .boton:hover {
@@ -73,52 +94,62 @@ p {
   background-color: #357ae8;
 }
 
-.boton-blanco {
-  background-color: white;
-  color: #333;
-  border: 2px solid #bbb;
+.boton-azul {
+  background-color: #4a90e2;
+  color: white;
 }
 
 .boton-blanco:hover {
   background-color: #eaeaea;
 }
 
-.flecha {
-  font-size: 18px;
+/* 🌍 Responsive para tablets y móviles */
+@media (max-width: 992px) {
+  .contenedor {
+    width: 90%;
+  }
+
+  .encabezado {
+    position: static;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .logo {
+    height: 35px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  .botones {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .boton {
+    width: 100%;
+    max-width: 300px;
+  }
 }
 
-.flecha.blanca {
-  color: white;
+@media (max-width: 480px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .boton {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
 }
-
-.flecha.gris {
-  color: gray;
-}
-
-.columna-derecha {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-}
-
-.imagen-placeholder {
-  width: 90%;
-  max-width: 500px;
-  height: auto;
-  background-color: #f8f8f8;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.imagen-placeholder img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-
-

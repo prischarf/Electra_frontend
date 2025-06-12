@@ -16,7 +16,9 @@ header {
 }
 
 .logo {
-    width: 150px;
+    height: 40px;
+    max-width: 150px;
+    object-fit: contain;
 }
 
 .usuario-icono {
