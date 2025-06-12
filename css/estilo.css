@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #d9f2ff; /* Celeste claro */
+  background-color: #d9f2ff;
   color: #000;
 }
 
@@ -16,14 +16,24 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative; /* Necesario para posicionar el logo */
 }
 
 .encabezado {
-  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 .logo {
-  height: 50px;
+  height: 45px;
+}
+
+.contenido {
+  /* Mantiene el contenido centrado verticalmente */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 h2 {
@@ -110,5 +120,34 @@ p {
   max-height: 100%;
 }
 
+/* Responsive */
+@media (max-width: 768px) {
+  .contenedor {
+    flex-direction: column;
+  }
 
+  .columna-izquierda,
+  .columna-derecha {
+    padding: 20px;
+  }
 
+  .encabezado {
+    position: static; /* Para que fluya normal en responsive */
+    margin-bottom: 20px;
+  }
+
+  .imagen-placeholder {
+    width: 100%;
+    height: auto;
+    opacity: 1;
+  }
+
+  .botones {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .boton {
+    justify-content: center;
+  }
+}
