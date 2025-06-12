@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login_compras</title>
   <link rel="stylesheet" href="css/Login_Compras.css" />
+  <style>
+    .error-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+
+    .error-container input {
+      margin-bottom: 2px;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 0.85em;
+      margin: 0;
+      height: 1em;
+    }
+  </style>
 </head>
 <body class="pagina-login">
   <div class="login-container">
@@ -20,13 +38,73 @@
         <img src="Imagenes/Inicio.png" alt="Icono Usuario" class="icono-usuario" />
       </div>
       <div class="login-right">
-        <h1>Iniciar Sesión</h1>
-        <input type="email" placeholder="Usuario" />
-        <input type="password" placeholder="Contraseña" />
-        <a href="Compras.html" class="btn-acceder">Acceder</a>
-        <a href="#" class="olvide">¿Olvidaste tu contraseña?</a>
+        <h1>Iniciar sesión</h1>
+
+        <div class="error-container">
+          <input type="email" id="usuario" placeholder="Usuario">
+          <div id="error-usuario" class="error-msg"></div>
+        </div>
+
+        <div class="error-container">
+          <input type="password" id="contrasena" placeholder="Contraseña">
+          <div id="error-contrasena" class="error-msg"></div>
+        </div>
+
+        <button class="btn-acceder" onclick="verificarLogin()">Acceder</button>
+        <!-- <a href="#" class="olvide">¿Olvidaste tu contraseña?</a> -->
       </div>
     </div>
-      </div>
+  </div>
+
+  <script>
+    function verificarLogin() {
+      const usuario = document.getElementById("usuario").value.trim();
+      const contrasena = document.getElementById("contrasena").value.trim();
+
+      const errorUsuario = document.getElementById("error-usuario");
+      const errorContrasena = document.getElementById("error-contrasena");
+
+      errorUsuario.textContent = "";
+      errorContrasena.textContent = "";
+
+      let valid = true;
+
+      if (usuario === "") {
+        errorUsuario.textContent = "Complete el campo";
+        valid = false;
+      }
+
+      if (contrasena === "") {
+        errorContrasena.textContent = "Complete el campo";
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      if (usuario === "compras" && contrasena === "2") {
+        window.location.href = "Compras.html";
+      } else {
+        if (usuario !== "compras") {
+          errorUsuario.textContent = "Ingrese un usuario válido";
+        }
+
+        if (contrasena !== "2") {
+          errorContrasena.textContent = "Ingrese una contraseña válida";
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const inputs = [document.getElementById("usuario"), document.getElementById("contrasena")];
+      inputs.forEach(input => {
+        input.addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            verificarLogin();
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
