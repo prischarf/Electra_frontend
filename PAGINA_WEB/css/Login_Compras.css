@@ -7,7 +7,7 @@
 body, html {
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f4faff;
+  background-color: #d9f2ff;
 }
 
 .pagina-login {
@@ -26,9 +26,13 @@ body, html {
 }
 
 .logo-acs {
+  position: fixed;
+  top: 20px;
+  left: 20px;
   max-width: 120px;
-  height: auto;
+  z-index: 1000;
 }
+
 
 .titulo-sistema {
   font-size: 1.5em;
@@ -39,9 +43,12 @@ body, html {
 .login-container {
   width: 100%;
   max-width: 900px;
+  margin-top: 100px; /* ← agregado */
+
 }
 
 .login-box {
+  position: relative; /* <- AÑADÍ esta línea */
   display: flex;
   background-color: #f4faff;
   border: 1px solid #d3e2ed;
@@ -87,26 +94,31 @@ input[type="password"] {
 
 .btn-acceder {
   width: 100%;
-  background-color: #4376d1;
+  background-color: #00497f;
   color: white;
   padding: 12px;
   border: none;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 30px;
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
-}
-
+  text-align: center;
+  text-decoration: none; /* <- esto asegura que no haya subrayado */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  
 .btn-acceder:hover {
-  background-color: #335eb4;
+  background-color: #00497f;
 }
 
 .olvide {
   display: block;
   margin-top: 12px;
   font-size: 0.9em;
-  color: #2b59c3;
+  color: #00497f;
   text-decoration: none;
 }
 
@@ -114,16 +126,72 @@ input[type="password"] {
   text-decoration: underline;
 }
 
-.btn-volver {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4376d1;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.icono-volver {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.btn-volver:hover {
-  background-color: #335eb4;
+.icono-volver:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-box {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .login-left,
+  .login-right {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+  }
+
+  .login-right {
+    padding-top: 20px;
+  }
+
+  .icono-usuario {
+    max-width: 150px;
+  }
+
+  .login-right h1 {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-login {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .titulo-sistema {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+
+  .login-box {
+    padding: 15px;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  .btn-acceder,
+  .btn-volver {
+    font-size: 0.9em;
+    padding: 10px;
+  }
+
+  .btn-volver {
+    width: 100%;
+  }
 }
