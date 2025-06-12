@@ -22,8 +22,9 @@ header {
 }
 
 .usuario-icono {
-    width: 40px; /* Tamaño más pequeño */
-    margin-left: auto; /* Lo empuja a la derecha */
+    width: 50px;
+    height: auto;
+    cursor: pointer;
 }
 
 /* Contenido principal */
