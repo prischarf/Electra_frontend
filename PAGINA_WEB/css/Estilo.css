@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #d9f2ff; /* Celeste claro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #d9f2ff;
   color: #000;
 }
 
@@ -16,23 +16,38 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 }
 
 .encabezado {
-  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 .logo {
-  height: 50px;
+  height: 40px;
+  max-width: 150px;
+  object-fit: contain;
+}
+.contenido {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;     /* 📌 CENTRA TODO HORIZONTALMENTE */
+  /*text-align: center;      /* 📌 CENTRA EL TEXTO */
 }
 
 h2 {
+  align-self: center; /* 📌 Esto mantiene el "¡Bienvenido!" a la izquierda */
+  text-align: left;
+  width: 100%; /* Para que ocupe el ancho disponible */
   font-size: 32px;
-  margin: 0 0 10px;
+  margin-bottom: 10px;
 }
 
 p {
-  font-size: 16px;
+  font-size: 20px;
   max-width: 500px;
 }
 
@@ -51,7 +66,11 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton:hover {
+  transform: translateY(-2px);
 }
 
 .boton-azul {
@@ -65,12 +84,12 @@ p {
 
 .boton-blanco {
   background-color: white;
-  color: black;
-  border: 2px solid #ccc;
+  color: #333;
+  border: 2px solid #bbb;
 }
 
 .boton-blanco:hover {
-  background-color: #f0f0f0;
+  background-color: #eaeaea;
 }
 
 .flecha {
@@ -96,13 +115,13 @@ p {
 .imagen-placeholder {
   width: 90%;
   max-width: 500px;
-  height: 350px;
-  background-color: #fff;
+  height: auto;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.5;
 }
 
 .imagen-placeholder img {
@@ -110,5 +129,71 @@ p {
   max-height: 100%;
 }
 
+/* Responsive para tablets y móviles */
+@media (max-width: 992px) {
+  .contenedor {
+    flex-direction: column;
+  }
 
+  .columna-izquierda,
+  .columna-derecha {
+    padding: 30px 20px;
+  }
 
+  .encabezado {
+    position: static;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .logo {
+    height: 35px;
+  }
+
+  h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  .botones {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .boton {
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .imagen-placeholder {
+    width: 100%;
+    height: auto;
+    opacity: 1;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .boton {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .flecha {
+    font-size: 16px;
+  }
+}

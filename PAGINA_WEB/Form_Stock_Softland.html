@@ -19,7 +19,7 @@
   </header>
 
   <main class="contenedor">
-    <h1>Nombre Reporte</h1>
+    <h1>Stock Depósito Softland</h1>
     <p>Propósito del reporte.</p>
 
     <form id="form-softland" class="formulario">
@@ -27,16 +27,10 @@
       <input type="text" id="destinatario" placeholder="Ingrese emails válidos">
       <small>(emails separados por coma)</small>
 
-      <label>Seleccione 1 o más reportes:</label>
+      <label>Seleccione el reporte:</label>
       <div class="checkbox-group">
-        <label><input type="checkbox"> Opción 1</label>
-        <label><input type="checkbox"> Opción 2</label>
+        <label><input type="checkbox" id="stockDeposito"> Stock Depósito Softland</label>
       </div>
-
-      <div class="fecha-group">
-        <label for="stockDeposito">
-          <input type="checkbox" id="stockDeposito"> ¿Stock en depósito?
-        </label>
 
         <div class="fecha-item">
           <label for="dia">Día:</label>
@@ -102,29 +96,6 @@
             <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-            <option value="2010">2010</option>
-            <option value="2009">2009</option>
-            <option value="2008">2008</option>
-            <option value="2007">2007</option>
-            <option value="2006">2006</option>
-            <option value="2005">2005</option>
-            <option value="2004">2004</option>
-            <option value="2003">2003</option>
-            <option value="2002">2002</option>
-            <option value="2001">2001</option>
-            <option value="2000">2000</option>
           </select>
         </div>
       </div>
@@ -145,7 +116,34 @@
 
     document.getElementById('form-softland').addEventListener('submit', async function (e) {
       e.preventDefault();
-      // Código de la API para enviar el reporte
+      // Armamos los parámetros con los nombres que espera la API
+      const params = {
+        dest: document.getElementById('destinatario').value,
+        stock_deposito: document.getElementById('stockDeposito').checked,
+        dia: document.getElementById('dia').value,
+        mes: document.getElementById('mes').value,
+        anio: document.getElementById('anio').value
+      };
+
+      const confirmacion = confirm("¿Desea enviar la alerta de stock Softland?");
+      if (!confirmacion) return;
+
+      const query = new URLSearchParams(params); 
+      const endpoint = 'http://localhost:4447/administracion/stock_softland/alerta';
+
+      try {
+        const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('resultado').innerText = `${data.mensaje} (ID: ${data.id_ejecución_flujo})`;
+        } else {
+          document.getElementById('resultado').innerText = `Error: ${data.detail || JSON.stringify(data)}`;
+        }
+      } catch (error) {
+        document.getElementById('resultado').innerText = `Error de red: ${error.message}`;
+      }
+
     });
   </script>
 </body>

@@ -1,10 +1,9 @@
 /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #E3F2FD; /* Azul claro */
-    text-align: center;
+    background-color: #d9f2ff; /* Azul claro */
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 /* Encabezado */
@@ -16,16 +15,24 @@ header {
 }
 
 .logo {
-    width: 150px;
+  top: 20px;
+  left: 20px;
+  max-width: 120px;
+  z-index: 1000;
 }
 
+/* Ícono de usuario u otro contenido a la derecha del header */
 .usuario-icono {
     width: 50px;
+    height: auto;
+    cursor: pointer;
+
 }
 
 /* Contenido principal */
 main {
     margin-top: 50px;
+    text-align: center;
 }
 
 h1 {
@@ -39,7 +46,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 35px; /* Espaciado adecuado */
+    gap: 35px;
     margin-top: 40px;
 }
 
@@ -59,4 +66,3 @@ h1 {
 .boton:hover {
     background-color: #0D47A1;
 }
-
