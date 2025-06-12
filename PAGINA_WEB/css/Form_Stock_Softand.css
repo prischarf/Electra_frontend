@@ -26,11 +26,9 @@ body {
 }
 
 .usuario-icono {
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer; /* Indica que el ícono es interactivo */
+    width: 50px;
+    height: auto;
+    cursor: pointer;
 }
 
 .menu-usuario {
