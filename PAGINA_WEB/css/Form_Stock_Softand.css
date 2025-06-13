@@ -2,12 +2,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #d5edf9;
+  background-color: #d9f2ff;
   color: #333;
 }
 
 .header {
-  background-color: #cce7f6;
+  background-color: #d9f2ff;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
