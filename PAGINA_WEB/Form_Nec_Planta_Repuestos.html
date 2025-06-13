@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Parámetros</title>
+  <link rel="stylesheet" href="css/Form_Nec_Planta_Repuestos.css">
+</head>
+<body>
+  <header class="header">
+    <img src="Imagenes/Logo_ADS.png" alt="Logo" class="logo">
+    <div class="usuario-container">
+      <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
+      <span class="cerrar-sesion-texto oculto" id="cerrarSesion">Cerrar sesión</span>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <h1>Formulario de Parámetros</h1>
+    <form id="form-parametros" class="formulario">
+      
+      <div class="campo">
+        <label for="destinatarios">Destinatarios:</label>
+        <input type="text" id="destinatarios" name="destinatarios" required>
+      </div>
+
+      <div class="campo">
+        <label for="corrida_especial">Corrida Especial:</label>
+        <select id="corrida_especial" name="corrida_especial">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="reclamo_pago_airtrade">Reclamo Pago Airtrade:</label>
+        <select id="reclamo_pago_airtrade" name="reclamo_pago_airtrade">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="reclamo_pi_airtrade">Reclamo PI Airtrade:</label>
+        <select id="reclamo_pi_airtrade" name="reclamo_pi_airtrade">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="planta">Planta:</label>
+        <select id="planta" name="planta">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="pendientes_pago_post_embarque">Pendientes Pago Post Embarque:</label>
+        <select id="pendientes_pago_post_embarque" name="pendientes_pago_post_embarque">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="solicitud_proforma_airtrade">Solicitud Proforma Airtrade:</label>
+        <select id="solicitud_proforma_airtrade" name="solicitud_proforma_airtrade">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="po_servicio_tecnico">PO Servicio Técnico:</label>
+        <select id="po_servicio_tecnico" name="po_servicio_tecnico">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="vep_repuestos">VEP Repuestos:</label>
+        <select id="vep_repuestos" name="vep_repuestos">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="botones">
+        <button type="button" id="volver" onclick="window.history.back();">Volver</button>
+        <button type="submit">Confirmar</button>
+      </div>
+
+
+    </form>
+
+    <p id="resultado"></p>
+  </main>
+
+  <script>
+    document.getElementById('form-parametros').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const params = {
+        destinatarios: document.getElementById('destinatarios').value,
+        corrida_especial: document.getElementById('corrida_especial').value,
+        reclamo_pago_airtrade: document.getElementById('reclamo_pago_airtrade').value,
+        reclamo_pi_airtrade: document.getElementById('reclamo_pi_airtrade').value,
+        planta: document.getElementById('planta').value,
+        pendientes_pago_post_embarque: document.getElementById('pendientes_pago_post_embarque').value,
+        solicitud_proforma_airtrade: document.getElementById('solicitud_proforma_airtrade').value,
+        po_servicio_tecnico: document.getElementById('po_servicio_tecnico').value,
+        vep_repuestos: document.getElementById('vep_repuestos').value
+      };
+
+      const endpoint = "http://localhost:4447/api/parametros"; 
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(params)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById("resultado").innerText = `Respuesta: ${data.mensaje}`;
+        } else {
+          document.getElementById("resultado").innerText = `Error: ${data.detail || JSON.stringify(data)}`;
+        }
+      } catch (error) {
+        document.getElementById("resultado").innerText = `Error de conexión: ${error.message}`;
+      }
+    });
+
+    document.getElementById('usuarioIcono').addEventListener('click', function () {
+      document.getElementById('cerrarSesion').classList.toggle('visible');
+    });
+
+    document.getElementById('cerrarSesion').addEventListener('click', function () {
+      window.location.href = "Index.html";
+    });
+  </script>
+
+</body>
+</html>
