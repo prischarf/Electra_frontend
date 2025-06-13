@@ -19,20 +19,19 @@
   </header>
 
   <main class="contenedor">
-    <h1>Alerta Stock Río Grande</h1>
-    <p>Configura los parámetros del reporte.</p>
-
+    <h1>Enviar Reporte de Stock Río Grande</h1>
+    <p>Se enviará un correo con los depósitos, productos y sus respectivas cantidades de stock.</p>
     <form id="form-stock-rg" class="formulario">
       <label for="destinatarios">Destinatarios:</label>
       <input type="text" id="destinatarios" placeholder="Ingrese emails válidos">
       <small>(emails separados por coma)</small>
 
       <label for="stockDepositoRg">
-        <input type="checkbox" id="stockDepositoRg"> ¿Stock en depósito Río Grande?
+        <input type="checkbox" id="stockDepositoRg"> Stock Depósito Río Grande
       </label>
 
       <label for="equiposMes">
-        <input type="checkbox" id="equiposMes"> ¿Equipos del mes?
+        <input type="checkbox" id="equiposMes"> Stock Equipos Mes
       </label>
 
       <div class="fecha-group">
@@ -78,15 +77,15 @@
           <label for="mes">Mes:</label>
           <select id="mes">
             <option value="">Seleccionar</option>
-            <option value="1">Enero</option>
-            <option value="2">Febrero</option>
-            <option value="3">Marzo</option>
-            <option value="4">Abril</option>
-            <option value="5">Mayo</option>
-            <option value="6">Junio</option>
-            <option value="7">Julio</option>
-            <option value="8">Agosto</option>
-            <option value="9">Septiembre</option>
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
             <option value="10">Octubre</option>
             <option value="11">Noviembre</option>
             <option value="12">Diciembre</option>
@@ -100,29 +99,6 @@
             <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="2016">2016</option>
-            <option value="2015">2015</option>
-            <option value="2014">2014</option>
-            <option value="2013">2013</option>
-            <option value="2012">2012</option>
-            <option value="2011">2011</option>
-            <option value="2010">2010</option>
-            <option value="2009">2009</option>
-            <option value="2008">2008</option>
-            <option value="2007">2007</option>
-            <option value="2006">2006</option>
-            <option value="2005">2005</option>
-            <option value="2004">2004</option>
-            <option value="2003">2003</option>
-            <option value="2002">2002</option>
-            <option value="2001">2001</option>
-            <option value="2000">2000</option>
           </select>
         </div>
       </div>
@@ -139,6 +115,36 @@
   <script>
     document.getElementById('usuarioIcono').addEventListener('click', function () {
       document.getElementById('menuUsuario').classList.toggle('visible');
+    });
+    document.getElementById('form-stock-rg').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      // Armamos los parámetros con los nombres que espera la API
+      const params = {
+        dest: document.getElementById('destinatarios').value,
+        stock_deposito_rg: document.getElementById('stockDepositoRg').checked,
+        equipos_mes: document.getElementById('equiposMes').checked,
+        dia: document.getElementById('dia').value,
+        mes: document.getElementById('mes').value,
+        anio: document.getElementById('anio').value
+      };
+
+      
+      const query = new URLSearchParams(params); 
+      const endpoint = 'http://localhost:4447/administracion/stock_rga/alertas';
+
+      try {
+        const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('resultado').innerText = `${data.mensaje} (ID: ${data.id_ejecución_flujo})`;
+        } else {
+          document.getElementById('resultado').innerText = `Error: ${data.detail || JSON.stringify(data)}`;
+        }
+      } catch (error) {
+        document.getElementById('resultado').innerText = `Error de red: ${error.message}`;
+      }
+
     });
   </script>
 </body>
