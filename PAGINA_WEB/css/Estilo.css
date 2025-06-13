@@ -94,9 +94,9 @@ p {
   background-color: #357ae8;
 }
 
-.boton-azul {
-  background-color: #4a90e2;
-  color: white;
+.boton-blanco {
+  background-color: #ffffff;
+  color: black;
 }
 
 .boton-blanco:hover {
