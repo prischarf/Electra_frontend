@@ -4,7 +4,7 @@ body {
     background-color: #d9f2ff; /* Azul claro */
     text-align: center;
     margin: 0;
-    padding: 20px;
+    padding: 0; /* Eliminado padding general para que el header quede arriba */
 }
 
 /* Encabezado */
@@ -12,7 +12,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 0 10px; /* Solo padding horizontal para que no queden pegados al borde */
+    margin: 0;
+    height: 60px; /* Puedes ajustar esta altura si quieres */
 }
 
 .logo {
@@ -22,34 +24,35 @@ header {
 }
 
 .usuario-icono {
-    width: 50px;
+    width: 40px;
     height: auto;
     cursor: pointer;
 }
 
+/* Ícono volver */
 .icono-volver {
     position: absolute;
-    top: 110px;
+    top: 80px;
     left: 20px;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
     transition: transform 0.2s ease;
-  }
-  
-  .icono-volver:hover {
+}
+
+.icono-volver:hover {
     transform: scale(1.1);
-  }
+}
 
 /* Contenido principal */
 main {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 h1 {
-    color: #0D47A1; /* Azul oscuro */
+    color: #0D47A1;
     font-size: 28px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 /* Botones */
@@ -57,23 +60,55 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px; /* Más espacio entre botones */
-    margin-top: 50px; /* Más espacio debajo del título */
+    gap: 30px;
+    margin-top: 30px;
 }
 
 .boton {
     display: block;
-    width: 270px; /* Botones más anchos */
+    width: 100%;
+    max-width: 270px;
     padding: 15px;
     text-decoration: none;
     border-radius: 8px;
     font-size: 18px;
     text-align: center;
     color: white;
-    background-color: #1565C0; /* Azul fuerte */
+    background-color: #1565C0;
     transition: background-color 0.3s ease;
 }
 
 .boton:hover {
     background-color: #0D47A1;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+    header {
+        flex-direction: row;
+        height: auto;
+        padding: 5px 10px;
+    }
+
+    .icono-volver {
+        top: 70px;
+        left: 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+    .botones {
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .boton {
+        font-size: 16px;
+        padding: 12px;
+    }
 }
