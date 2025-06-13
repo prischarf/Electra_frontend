@@ -4,7 +4,7 @@ body {
     background-color: #d9f2ff; /* Azul claro */
     text-align: center;
     margin: 0;
-    padding: 0; /* Eliminado padding general para que el header quede arriba */
+    padding: 0;
 }
 
 /* Encabezado */
@@ -12,9 +12,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px; /* Solo padding horizontal para que no queden pegados al borde */
     margin: 0;
-    height: 60px; /* Puedes ajustar esta altura si quieres */
+    padding: 0 10px; /* margen horizontal leve para que no queden totalmente pegados */
+    height: 60px;
 }
 
 .logo {
@@ -26,9 +26,15 @@ header {
     left: 20px;
 }
 
+/* Usuario-icono: mismo alto que el logo, alineado al borde derecho */
 .usuario-icono {
-    max-width: 250px;
-    height: auto;
+    height: 40px;    /* mismo tamaño visual que el logo */
+    width: auto;
+    object-fit: contain;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;    /* PEGADO al borde derecho */
 }
 
 /* Ícono volver */
@@ -86,10 +92,14 @@ h1 {
 
 /* RESPONSIVO */
 @media (max-width: 600px) {
-    header {
-        flex-direction: row;
-        height: auto;
-        padding: 5px 10px;
+    .logo,
+    .usuario-icono {
+        height: 30px;
+    }
+
+    .usuario-icono {
+        top: 10px;
+        right: 10px;
     }
 
     .icono-volver {
@@ -99,13 +109,9 @@ h1 {
         height: 30px;
     }
 
-    .usuario-icono {
-        max-width: 150px;
-      }
-
     h1 {
         font-size: 22px;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
 
     .botones {

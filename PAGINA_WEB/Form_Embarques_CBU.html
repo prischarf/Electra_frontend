@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corrida Especial</title>
+  <link rel="stylesheet" href="css/Form_Embarques_CBU.css">
+</head>
+<body>
+  <header class="header">
+    <img src="Imagenes/Logo_ADS.png" alt="Logo" class="logo">
+    <div class="usuario-container">
+      <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
+      <span class="cerrar-sesion-texto oculto" id="cerrarSesion">Cerrar sesión</span>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <h1>Corrida Especial</h1>
+    <form id="form-corrida-especial" class="formulario">
+      <label for="corridaEspecial">
+        <input type="checkbox" id="corridaEspecial"> Corrida especial
+      </label>
+
+      <div class="botones">
+        <button type="button" id="volver" onclick="window.history.back();">Volver</button>
+        <button type="submit">Confirmar</button>
+      </div>
+    </form>
+
+    <p id="resultado"></p>
+  </main>
+
+  <script>
+    document.getElementById('form-corrida-especial').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const params = {
+        corrida_especial: document.getElementById('corridaEspecial').checked
+      };
+
+      const query = new URLSearchParams(params);
+      const endpoint = 'http://localhost:4447/administracion/stock_rga/alertas';
+
+      try {
+        const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
+        const data = await response.json();
+
+        if (response.ok) {
+          document.getElementById('resultado').innerText = `${data.mensaje} (ID: ${data.id_ejecución_flujo})`;
+        } else {
+          document.getElementById('resultado').innerText = `Error: ${data.detail || JSON.stringify(data)}`;
+        }
+      } catch (error) {
+        document.getElementById('resultado').innerText = `Error de red: ${error.message}`;
+      }
+    });
+
+    document.getElementById('usuarioIcono').addEventListener('click', function () {
+      document.getElementById('cerrarSesion').classList.toggle('visible');
+    });
+
+    document.getElementById('cerrarSesion').addEventListener('click', function () {
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
