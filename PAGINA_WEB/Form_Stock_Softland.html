@@ -19,8 +19,8 @@
   </header>
 
   <main class="contenedor">
-    <h1>Stock Depósito Softland</h1>
-    <p>Propósito del reporte.</p>
+    <h1>Enviar Reporte de Stock Softland</h1>
+    <p>Se enviará un correo con los depósitos, productos y sus respectivas cantidades de stock.</p>
 
     <form id="form-softland" class="formulario">
       <label for="destinatario">Destinatarios:</label>
@@ -29,7 +29,7 @@
 
       <label>Seleccione el reporte:</label>
       <div class="checkbox-group">
-        <label><input type="checkbox" id="stockDeposito"> Stock Depósito Softland</label>
+        <label><input type="checkbox" id="stockDeposito"> Stock Softland</label>
       </div>
 
         <div class="fecha-item">
@@ -74,15 +74,15 @@
           <label for="mes">Mes:</label>
           <select id="mes">
             <option value="">Seleccionar</option>
-            <option value="1">Enero</option>
-            <option value="2">Febrero</option>
-            <option value="3">Marzo</option>
-            <option value="4">Abril</option>
-            <option value="5">Mayo</option>
-            <option value="6">Junio</option>
-            <option value="7">Julio</option>
-            <option value="8">Agosto</option>
-            <option value="9">Septiembre</option>
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
             <option value="10">Octubre</option>
             <option value="11">Noviembre</option>
             <option value="12">Diciembre</option>
@@ -125,9 +125,7 @@
         anio: document.getElementById('anio').value
       };
 
-      const confirmacion = confirm("¿Desea enviar la alerta de stock Softland?");
-      if (!confirmacion) return;
-
+     
       const query = new URLSearchParams(params); 
       const endpoint = 'http://localhost:4447/administracion/stock_softland/alerta';
 
