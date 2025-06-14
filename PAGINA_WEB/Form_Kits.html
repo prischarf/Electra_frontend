@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Parámetros</title>
-  <link rel="stylesheet" href="css/Form_Nec_Planta_Repuestos.css">
+  <link rel="stylesheet" href="css/Form_Comb_Planillas.css">
 </head>
 <body>
   <header class="header">
@@ -16,11 +16,11 @@
   </header>
 
   <main class="contenedor">
-    <h1>Cargar y Enviar Alerta de Nec Planta Repuestos</h1>
-    <p>Se cargará Nec Planta Repuestos y se enviará una alerta por correo.</p>
+    <h1>Cargar y Enviar Alerta de Kits</h1>
+    <p>Se cargará la planilla de Kits y se enviará una alerta por correo.</p>
 
     <form id="form-parametros" class="formulario">
-
+      
       <div class="campo">
         <label for="destinatarios">Destinatarios:</label>
         <div class="campo-destinatario">
@@ -30,35 +30,31 @@
       </div>
 
       <div class="campo">
-        <label><input type="checkbox" id="corrida_especial" name="corrida_especial"> Corrida Especial</label>
+        <label>
+          <input type="checkbox" id="corrida_especial" name="corrida_especial">
+          Corrida Especial
+        </label>
       </div>
 
       <div class="campo">
-        <label><input type="checkbox" id="reclamo_pago_airtrade" name="reclamo_pago_airtrade"> Reclamo Pago Airtrade</label>
+        <label>
+          <input type="checkbox" id="dias_embarcados" name="dias_embarcados">
+          Días Embarcados
+        </label>
       </div>
 
       <div class="campo">
-        <label><input type="checkbox" id="reclamo_pi_airtrade" name="reclamo_pi_airtrade"> Reclamo PI Airtrade</label>
+        <label>
+          <input type="checkbox" id="po_cambios" name="po_cambios">
+          PO Cambios
+        </label>
       </div>
 
       <div class="campo">
-        <label><input type="checkbox" id="planta" name="planta"> Planta</label>
-      </div>
-
-      <div class="campo">
-        <label><input type="checkbox" id="pendientes_pago_post_embarque" name="pendientes_pago_post_embarque"> Pendientes Pago Post Embarque</label>
-      </div>
-
-      <div class="campo">
-        <label><input type="checkbox" id="solicitud_proforma_airtrade" name="solicitud_proforma_airtrade"> Solicitud Proforma Airtrade</label>
-      </div>
-
-      <div class="campo">
-        <label><input type="checkbox" id="po_servicio_tecnico" name="po_servicio_tecnico"> PO Servicio Técnico</label>
-      </div>
-
-      <div class="campo">
-        <label><input type="checkbox" id="vep_repuestos" name="vep_repuestos"> VEP Repuestos</label>
+        <label>
+          <input type="checkbox" id="ref_unicas" name="ref_unicas">
+          Referencias Únicas
+        </label>
       </div>
 
       <div class="botones">
@@ -77,13 +73,10 @@
       const params = {
         destinatarios: document.getElementById('destinatarios').value,
         corrida_especial: document.getElementById('corrida_especial').checked,
-        reclamo_pago_airtrade: document.getElementById('reclamo_pago_airtrade').checked,
-        reclamo_pi_airtrade: document.getElementById('reclamo_pi_airtrade').checked,
-        planta: document.getElementById('planta').checked,
-        pendientes_pago_post_embarque: document.getElementById('pendientes_pago_post_embarque').checked,
-        solicitud_proforma_airtrade: document.getElementById('solicitud_proforma_airtrade').checked,
-        po_servicio_tecnico: document.getElementById('po_servicio_tecnico').checked,
-        vep_repuestos: document.getElementById('vep_repuestos').checked
+        dias_embarcados: document.getElementById('dias_embarcados').checked,
+        po_cambios: document.getElementById('po_cambios').checked,
+        ref_unicas: document.getElementById('ref_unicas').checked,
+
       };
 
       const endpoint = "http://localhost:4447/api/parametros"; 

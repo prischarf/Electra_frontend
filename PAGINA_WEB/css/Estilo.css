@@ -46,16 +46,18 @@ body {
   justify-content: center;
   align-items: center; /* Centra el contenido */
   width: 100%;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 h2 {
-  font-size: 32px;
-  margin-bottom: 10px;
+  font-size: 40px;
+  margin-bottom: 15px;
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
 p {
-  font-size: 16px;
+  font-size: 22px;
   max-width: 500px;
 }
 
@@ -72,7 +74,7 @@ p {
   text-decoration: none;
   border-radius: 8px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center; /* Centra los botones */
@@ -110,25 +112,30 @@ p {
   }
 
   .encabezado {
-    position: static;
     margin-bottom: 20px;
     text-align: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
   }
-
+  
   .logo {
     height: 35px;
   }
 
   h2 {
-    font-size: 28px;
+    font-size: 40px;
+  }
+  .contenido {
+    margin-top: 10px;
   }
 
   p {
-    font-size: 16px;
+    font-size: 22px;
   }
 
   .botones {
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     align-items: center;
   }
@@ -136,20 +143,27 @@ p {
   .boton {
     width: 100%;
     max-width: 300px;
+    min-width: 150px; /* Podés ajustar esto para que entren mejor en pantallas chicas */
+    }
   }
-}
+  
 
 @media (max-width: 480px) {
   h2 {
-    font-size: 24px;
+    font-size: 40px;
   }
 
   p {
-    font-size: 14px;
+    font-size: 22px;
+  }
+
+  .contenido {
+    margin-top: 10px;
   }
 
   .boton {
-    font-size: 14px;
-    padding: 10px 20px;
+    font-size: 20px;
+    padding: 10px 24px;
   }
-}
+
+  }

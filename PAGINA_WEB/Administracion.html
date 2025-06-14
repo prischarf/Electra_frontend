@@ -9,19 +9,41 @@
 <body>
     <header>
         <img src="Imagenes/Logo_ADS.png" alt="ACS AiresDelSur" class="logo">
-        <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono">
+        <div class="usuario-container">
+            <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
+            <span class="cerrar-sesion-texto oculto" id="cerrarSesion">Cerrar sesión</span>
+        </div>
     </header>
 
     <main>
         <h1>Reportes Administración</h1>
         <div class="botones">
             <a href="Login_Admin.html" title="Volver">
-                <img src="Imagenes/Flecha_volver.png" alt="Icono Volver" class="icono-volver" />
+                <img src="Imagenes/Flecha_Volver.png" alt="Icono Volver" class="icono-volver" />
               </a>
-            <a href="Form_Stock_Softland.html" class="boton">Stock Softland</a>
-            <a href="Form_Stock_RG.html" class="boton">Stock Río Grande</a>
+              <a href="Form_Stock_Softland.html" class="boton">
+                Stock Softland
+                <span class="tooltip-text">Reportes:<br>
+                        1. Stock Softland</span>
+              </a>
+            
+              <a href="Form_Stock_RG.html" class="boton">
+                Stock Río Grande
+                <span class="tooltip-text">Reportes:<br>
+                    1. Stock Río Grande<br>
+                    2. Stock Equipos Mes
+              </a>
         </div>
     </main>
+    <script>
+        document.getElementById('usuarioIcono').addEventListener('click', function () {
+      document.getElementById('cerrarSesion').classList.toggle('visible');
+    });
+
+    document.getElementById('cerrarSesion').addEventListener('click', function () {
+      window.location.href = "Index.html";
+    });
+    </script>
 </body>
 </html>
 

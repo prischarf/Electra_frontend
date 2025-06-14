@@ -52,6 +52,29 @@ header {
     transform: scale(1.1);
 }
 
+.cerrar-sesion-texto {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    text-align: center;
+    position: absolute;
+    top: 60px;
+    left: auto;
+    right: 10px;
+    width: auto;
+    white-space: nowrap;
+  }
+  
+  .visible {
+    display: block;
+  }
+
 /* Contenido principal */
 main {
     margin-top: 40px;
@@ -90,6 +113,36 @@ h1 {
     background-color: #0D47A1;
 }
 
+
+.boton {
+    position: relative;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 220px;
+    background-color: #7d9dda;
+    color: #000000dd;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    bottom: 35%;
+    left: 125%;
+    transform: translateX(-50%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+    font-size: 13px;
+    pointer-events: none;
+    white-space: normal;
+  }
+  
+  .boton:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  
 /* RESPONSIVO */
 @media (max-width: 600px) {
     .logo,
