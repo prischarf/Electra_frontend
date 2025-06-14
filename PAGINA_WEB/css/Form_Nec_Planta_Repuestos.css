@@ -18,23 +18,22 @@ body {
   height: 40px;
   max-width: 150px;
   object-fit: contain;
-}
-
-.usuario-container {
   position: absolute;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+  top: 20px;
+  left: 20px;
 }
 
+/* Usuario-icono: mismo alto que el logo, alineado al borde derecho */
 .usuario-icono {
-  width: 50px;
-  height: auto;
+  height: 40px;    /* mismo tamaño visual que el logo */
+  width: auto;
+  object-fit: contain;
   cursor: pointer;
-  margin-top: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;    /* PEGADO al borde derecho */
 }
+
 
 .cerrar-sesion-texto {
   font-size: 14px;
@@ -48,7 +47,9 @@ body {
   display: none;
   text-align: center;
   position: absolute;
-  top: 80px;
+  top: 60px;
+  left: auto;
+  right: 10px;
   width: auto;
   white-space: nowrap;
 }
@@ -68,7 +69,6 @@ body {
 }
 
 h1 {
-  text-align: center;
   font-size: 22px;
   color: #222;
 }
@@ -82,9 +82,19 @@ h1 {
 .campo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 15px;
 }
+
+.campo label {
+  width: 350px; /* Fijá según el largo de tus textos */
+  font-weight: bold;
+  text-align: left; /* ← clave para que el texto quede alineado a la izquierda */
+}
+
+.campo select {
+  width: 60px; /* Fijá el ancho para que todos los select sean iguales */
+}
+
 
 label {
   font-weight: bold;
@@ -98,6 +108,10 @@ select {
   border: 1px solid #88c8e8;
   border-radius: 5px;
   background-color: #f9f9f9;
+  margin-right: 19px;
+  width: 300px; /* Opcional: ancho del input de destinatarios */
+
+  
 }
 
 /* Estilos de botones ajustados */
@@ -129,10 +143,28 @@ button[type="submit"] {
   color: #fff;
 }
 
+.campo-destinatario {
+  display: flex;
+  flex-grow: 1;
+}
+
+.campo-destinatario small {
+  font-size: 12px;
+  color: #555;
+}
+
 
 
 /* Ajustes responsive */
 @media (max-width: 600px) {
+  .usuario-icono {
+      height: 30px;
+  }
+
+  .usuario-icono {
+      top: 10px;
+      right: 10px;
+  }
   .contenedor {
     max-width: 90%;
   }

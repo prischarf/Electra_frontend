@@ -2,6 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #d9f2ff; /* Azul claro */
+    text-align: center;
     margin: 0;
     padding: 0; /* Eliminamos todo padding del body */
 }
@@ -14,26 +15,32 @@ header {
     margin: 0;
     padding: 0 10px; /* Solo un pequeño margen lateral para que no quede pegado feo */
     height: 60px; /* Altura fija para uniformidad */
-    box-sizing: border-box;
 }
 
 .logo {
     height: 40px;
     max-width: 150px;
     object-fit: contain;
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }
 
 .usuario-icono {
     width: 40px;
     height: auto;
     cursor: pointer;
+    object-fit: contain;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 /* Ícono volver */
 .icono-volver {
     position: absolute;
     top: 80px; /* Ajustado para quedar más cerca si header es más chico */
-    left: 15px;
+    left: 20px;
     width: 35px;
     height: 35px;
     cursor: pointer;
@@ -44,16 +51,38 @@ header {
     transform: scale(1.1);
 }
 
+.cerrar-sesion-texto {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    text-align: center;
+    position: absolute;
+    top: 60px;
+    left: auto;
+    right: 10px;
+    width: auto;
+    white-space: nowrap;
+  }
+  
+  .visible {
+    display: block;
+  }
+
 /* Contenido principal */
 main {
     margin-top: 40px;
-    text-align: center;
 }
 
 h1 {
     color: #0D47A1; /* Azul oscuro */
     font-size: 28px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
 /* Botones */
@@ -62,7 +91,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin-top: 35px;
+    margin-top: 30px;
 }
 
 .boton {
@@ -82,6 +111,36 @@ h1 {
 .boton:hover {
     background-color: #0D47A1;
 }
+
+.boton {
+    position: relative;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 220px;
+    background-color: #7d9dda;
+    color: #000000dd;
+    text-align: left;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    bottom: 35%;
+    left: 125%;
+    transform: translateX(-50%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+    font-size: 13px;
+    pointer-events: none;
+    white-space: normal;
+  }
+  
+  .boton:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  
 
 /* RESPONSIVO */
 @media (max-width: 600px) {
@@ -113,7 +172,7 @@ h1 {
 
     .botones {
         gap: 20px;
-        margin-top: 25px;
+        margin-top: 20px;
     }
 
     .boton {

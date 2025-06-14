@@ -144,6 +144,13 @@
       } catch (error) {
         document.getElementById('resultado').innerText = `Error de red: ${error.message}`;
       }
+      document.getElementById('usuarioIcono').addEventListener('click', function () {
+      document.getElementById('cerrarSesion').classList.toggle('visible');
+      });
+
+      document.getElementById('cerrarSesion').addEventListener('click', function () {
+        window.location.href = "Index.html";
+      });
 
     });
   </script>

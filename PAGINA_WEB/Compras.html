@@ -9,22 +9,92 @@
 <body>
     <header>
         <img src="Imagenes/Logo_ADS.png" alt="ACS AiresDelSur" class="logo">
-        <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono">
+    <div class="usuario-container">
+        <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
+        <span class="cerrar-sesion-texto oculto" id="cerrarSesion">Cerrar sesión</span>
+    </div>
     </header>
 
     <main>
         <h1>Reportes Compras</h1>
         <div class="botones">
             <a href="Login_Compras.html" title="Volver">
-                <img src="Imagenes/Flecha_volver.png" alt="Icono Volver" class="icono-volver" />
+                <img src="Imagenes/Flecha_Volver.png" alt="Icono Volver" class="icono-volver" />
             </a>
-            <a href="Alertas.html" class="boton">Activar/Desactivar alertas</a>
-            <a href="Form_Embarques_CBU.html" class="boton">Embarques CBU</a>
-            <a href="Form_Nec_Planta_Repuestos.html" class="boton">Nec Planta Repuestos</a>
-            <a href="Planillas.html" class="boton">Combinación de Planillas</a>
-            <a href="Kits.html" class="boton">Kits</a>
+            <a href="Form_Alertas.html" class="boton">
+                Activar/Desactivar alertas
+                <span class="tooltip-text">Parámetros:<br>
+                    1. Solo Mostrar<br>
+                    2. Días Embarcados<br>
+                    3. Pendientes Pago Post Embarque<br>
+                    4. Planta<br>
+                    5. PO Cambios<br>
+                    6. PO Servicio Técnico<br>
+                    7. Reclamo Pago Airtrade<br>
+                    8. Reclamo PI Airtrade<br>
+                    9. Referencia Únicas<br>
+                    10. Solicitud Proforma Airtrade<br>
+                    11. VEP Contenedores<br>
+                    12. VEP General<br>
+                    13. VEP Repuestos<br>
+                    
+                </span>
+            </a>
+
+            <a href="Form_Embarques_CBU.html" class="boton">
+                Planilla Embarque CBU
+                <span class="tooltip-text">Carga de planilla.<br> 
+                    Parámetros:<br>
+                    1.  Corrida Especial
+                </span>
+            </a>
+
+            <a href="Form_Nec_Planta_Repuestos.html" class="boton">
+                Nec Planta Repuestos
+                <span class="tooltip-text"> Carga y envía alerta.<br>
+                    Parámetros:<br>
+                    1. Corrida Especial<br>
+                    2. Reclamo Pago Airtrade<br>
+                    3. Reclamo PI Airtrade<br>
+                    4. Planta<br>
+                    5. Pendientes Pago Post Embarque<br>
+                    6. Solicitud Proforma Airtrade<br>
+                    7. PO Servicio Técnico<br>
+                    8. VEP Repuestos
+                </span>
+            </a>
+
+            <a href="Form_Comb_Planillas.html" class="boton">
+                Combinación de Planillas
+                <span class="tooltip-text">Carga y envía alerta.<br>
+                    Parámetros:<br>
+                    1. Corrida Especial<br>
+                    2. VEP General<br>
+                    3. VEP Contenedores<br>
+                </span>
+            </a>
+
+            <a href="Form_Kits.html" class="boton">
+                Importaciones Kits
+                <span class="tooltip-text">Carga y envía alerta.<br>
+                    Parámetros:<br>
+                    1. Corrida Especial<br>
+                    2. Días Embarcados<br>
+                    3. PO Cambios<br>
+                    4. Referencias Únicas
+                </span>
+            </a>
         </div>
     </main>
+    <script>
+        document.getElementById('usuarioIcono').addEventListener('click', function () {
+      document.getElementById('cerrarSesion').classList.toggle('visible');
+    });
+
+    document.getElementById('cerrarSesion').addEventListener('click', function () {
+      window.location.href = "Index.html";
+    });
+    </script>
 </body>
 </html>
 
