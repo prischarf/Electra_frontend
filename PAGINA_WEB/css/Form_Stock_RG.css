@@ -126,14 +126,14 @@ small {
 
 .fecha-group {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .fecha-item {
   display: flex;
-  flex-direction: column;
-  position: relative;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .fecha-group select {
@@ -176,6 +176,29 @@ button#volver:hover {
   font-weight: bold;
   font-size: 14px;
   color: #333;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.error {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+  display: block;
 }
 
 @media (max-width: 600px) {

@@ -9,10 +9,6 @@
 <body>
   <header class="header">
     <img src="Imagenes/Logo_ADS.png" alt="Logo" class="logo">
-    <div class="usuario-container">
-      <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
-      <span class="cerrar-sesion-texto oculto" id="cerrarSesion">Cerrar sesión</span>
-    </div>
   </header>
 
   <main class="contenedor">
@@ -132,14 +128,6 @@
       } catch (error) {
         document.getElementById("resultado").innerText = `Error de conexión: ${error.message}`;
       }
-    });
-
-    document.getElementById('usuarioIcono').addEventListener('click', function () {
-      document.getElementById('cerrarSesion').classList.toggle('visible');
-    });
-
-    document.getElementById('cerrarSesion').addEventListener('click', function () {
-      window.location.href = "Index.html";
     });
   </script>
 </body>

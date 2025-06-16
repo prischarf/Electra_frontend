@@ -9,32 +9,28 @@
 <body>
   <header class="header">
     <img src="Imagenes/Logo_ADS.png" alt="ACS AiresDelSur" class="logo">
-    <div class="usuario-container">
-      <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
-      <div class="menu-usuario" id="menuUsuario">
-        <a href="Index.html" id="cerrarSesion">Cerrar sesión</a>
-      </div>
     </div>
   </header>
 
   <main class="contenedor">
-    <h1>Enviar Reporte de Stock Softland</h1>
+    <h1>ENVIAR REPORTE DE STOCK SOFTLAND</h1>
     <p>Se enviará un correo con los depósitos, productos y sus respectivas cantidades de stock.</p>
-
     <form id="form-softland" class="formulario">
       <label for="destinatario">Destinatarios:</label>
       <input type="text" id="destinatario" placeholder="Ingrese emails válidos">
       <small>(emails separados por coma)</small>
+      <span id="error-destinatario" class="error"></span>
 
-      <label>Seleccione el reporte:</label>
       <div class="checkbox-group">
         <label><input type="checkbox" id="stockDeposito"> Stock Softland</label>
       </div>
+      <span id="error-reportes" class="error"></span>
 
+        <label>Fecha:</label>
+        <div class="fecha-group">
         <div class="fecha-item">
-          <label for="dia">Día:</label>
           <select id="dia">
-            <option value="">Seleccionar</option>
+            <option value="">Día</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -70,9 +66,8 @@
         </div>
 
         <div class="fecha-item">
-          <label for="mes">Mes:</label>
           <select id="mes">
-            <option value="">Seleccionar</option>
+            <option value="">Mes</option>
             <option value="01">Enero</option>
             <option value="02">Febrero</option>
             <option value="03">Marzo</option>
@@ -89,15 +84,15 @@
         </div>
 
         <div class="fecha-item">
-          <label for="anio">Año:</label>
           <select id="anio">
-            <option value="">Seleccionar</option>
+            <option value="">Año</option>
             <option value="2025">2025</option>
             <option value="2024">2024</option>
             <option value="2023">2023</option>
           </select>
         </div>
       </div>
+    </div>
 
       <div class="botones">
         <button type="button" id="volver" onclick="window.history.back();">Volver</button>
@@ -108,48 +103,130 @@
     <p id="resultado"></p>
   </main>
 
+  <!-- Modal Confirmación -->
+  <div id="modalConfirmar" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <p id="mensajeConfirmar"></p>
+      <button id="btnEnviar">Enviar</button>
+      <button id="btnCancelar">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal Resultado (éxito o error) -->
+  <div id="modalResultado" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <p id="mensajeResultado"></p>
+      <button id="btnCerrarResultado">Cerrar</button>
+    </div>
+  </div>
+
   <script>
-    document.getElementById('usuarioIcono').addEventListener('click', function () {
-      document.getElementById('menuUsuario').classList.toggle('visible');
+    const form = document.getElementById('form-softland');
+    const modalConfirmar = document.getElementById('modalConfirmar');
+    const modalResultado = document.getElementById('modalResultado');
+    const btnEnviar = document.getElementById('btnEnviar');
+    const btnCancelar = document.getElementById('btnCancelar');
+    const btnCerrarResultado = document.getElementById('btnCerrarResultado');
+    const mensajeConfirmar = document.getElementById('mensajeConfirmar');
+    const mensajeResultado = document.getElementById('mensajeResultado');
+    const resultado = document.getElementById('resultado');
+
+    const errorDestinatario = document.getElementById('error-destinatario');
+    const errorReportes = document.getElementById('error-reportes');
+
+    let datosFormulario = {}; // global para usar tras la confirmación
+
+   // Oculta el mensaje de error cuando se empieza a escribir destinatarios
+   document.getElementById('destinatario').addEventListener('input', function () {
+      if (this.value.trim() !== "") {
+        errorDestinatario.innerText = "";
+      }
     });
 
-    document.getElementById('form-softland').addEventListener('submit', async function (e) {
+    // Oculta el mensaje de error si se selecciona algún checkbox
+    const checkboxes = [document.getElementById('stockDeposito')];
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        if (checkboxes.some(c => c.checked)) {
+          errorReportes.innerText = "";
+        }
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
-      // Armamos los parámetros con los nombres que espera la API
-      const params = {
-        dest: document.getElementById('destinatario').value,
+      resultado.innerText = "";
+
+      // Limpiar mensajes de error anteriores
+      errorDestinatario.innerText = "";
+      errorReportes.innerText = "";
+
+      const destinatarios = document.getElementById('destinatario').value.trim();
+      const checks = [];
+
+      if (document.getElementById('stockDeposito').checked) {
+        checks.push("Stock Softland");
+      }
+
+      let tieneErrores = false;
+
+      if (checks.length === 0) {
+        errorReportes.innerText = "Debe seleccionar al menos un reporte.";
+        tieneErrores = true;
+      }
+
+      if (destinatarios === "") {
+        errorDestinatario.innerText = "Debe ingresar al menos un destinatario.";
+        tieneErrores = true;
+      }
+
+      if (tieneErrores) return;
+
+      // Guardamos los datos para usarlos luego si confirma
+      datosFormulario = {
+        dest: destinatarios,
         stock_deposito: document.getElementById('stockDeposito').checked,
         dia: document.getElementById('dia').value,
         mes: document.getElementById('mes').value,
         anio: document.getElementById('anio').value
       };
 
-     
-      const query = new URLSearchParams(params); 
+      // Mensaje personalizado en el modal de confirmación
+      mensajeConfirmar.innerText = `¿Desea enviar el reporte: ${checks.join(", ")} a ${destinatarios}?`;
+      modalConfirmar.style.display = 'flex';
+    });
+
+    btnCancelar.addEventListener('click', () => {
+      modalConfirmar.style.display = 'none';
+    });
+
+    btnEnviar.addEventListener('click', async () => {
+      modalConfirmar.style.display = 'none';
+
+      const query = new URLSearchParams(datosFormulario);
       const endpoint = 'http://localhost:4447/administracion/stock_softland/alerta';
 
       try {
         const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
         const data = await response.json();
 
-        if (response.ok) {
-          document.getElementById('resultado').innerText = `${data.mensaje} (ID: ${data.id_ejecución_flujo})`;
+        if (response.ok && data.estado === "Completed") {
+          mensajeResultado.innerText = "Mail enviado correctamente.";
+          form.reset();
         } else {
-          document.getElementById('resultado').innerText = `Error: ${data.detail || JSON.stringify(data)}`;
+          mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
         }
       } catch (error) {
-        document.getElementById('resultado').innerText = `Error de red: ${error.message}`;
+        mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
       }
 
-      document.getElementById('usuarioIcono').addEventListener('click', function () {
-      document.getElementById('cerrarSesion').classList.toggle('visible');
-      });
-
-      document.getElementById('cerrarSesion').addEventListener('click', function () {
-        window.location.href = "Index.html";
-      });
-
+      modalResultado.style.display = 'flex';
     });
-  </script>
+
+    btnCerrarResultado.addEventListener('click', () => {
+      modalResultado.style.display = 'none';
+    });
+
+  </script>   
 </body>
 </html>

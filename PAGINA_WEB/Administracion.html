@@ -36,13 +36,27 @@
         </div>
     </main>
     <script>
-        document.getElementById('usuarioIcono').addEventListener('click', function () {
-      document.getElementById('cerrarSesion').classList.toggle('visible');
-    });
+        const icono = document.getElementById('usuarioIcono');
+        const botonCerrar = document.getElementById('cerrarSesion');
 
-    document.getElementById('cerrarSesion').addEventListener('click', function () {
-      window.location.href = "Index.html";
-    });
+        // Mostrar/ocultar el botón al hacer clic en el ícono
+        icono.addEventListener('click', function (e) {
+            botonCerrar.classList.toggle('visible');
+            e.stopPropagation(); // Evita que el clic se propague y lo cierre inmediatamente
+        });
+
+        // Ir a la página de inicio al hacer clic en "Cerrar sesión"
+        botonCerrar.addEventListener('click', function () {
+            window.location.href = "Index.html";
+        });
+
+        // Si hacés clic en cualquier otra parte, ocultar el botón
+        document.addEventListener('click', function (e) {
+            // Solo lo oculta si el clic no fue dentro del botón ni en el ícono
+            if (!icono.contains(e.target) && !botonCerrar.contains(e.target)) {
+            botonCerrar.classList.remove('visible');
+            }
+        });
     </script>
 </body>
 </html>
