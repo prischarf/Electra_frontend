@@ -70,6 +70,10 @@ header {
     white-space: nowrap;
   }
   
+  .oculto {
+    display: none;
+  }
+
   .visible {
     display: block;
   }
