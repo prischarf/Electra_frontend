@@ -97,7 +97,7 @@ label {
 }
 
 input[type="text"], select {
-  width: 100%;
+  width: 95%;
   padding: 7px 10px;
   border: 1px solid #88c8e8;
   border-radius: 5px;
