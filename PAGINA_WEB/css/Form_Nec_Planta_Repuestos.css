@@ -62,13 +62,14 @@ body {
 .contenedor {
   background-color: #fff;
   margin: 40px auto;
-  padding: 30px;
-  max-width: 500px;
+  padding: 30px 25px;
+  max-width: 600px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 h1 {
+  margin-top: 0;
   font-size: 22px;
   color: #222;
 }
@@ -76,18 +77,19 @@ h1 {
 .formulario {
   display: flex;
   flex-direction: column;
+  align-items: flex-start; /* ← clave */
 }
 
 /* Corrección de la estructura de los campos */
 .campo {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  flex-direction: column; /* ← importante */
+  font-size: 15px;
 }
 
 .campo label {
-  width: 350px; /* Fijá según el largo de tus textos */
-  font-weight: bold;
+  width: 300px; /* Fijá según el largo de tus textos */
   text-align: left; /* ← clave para que el texto quede alineado a la izquierda */
 }
 
@@ -97,27 +99,25 @@ h1 {
 
 
 label {
-  font-weight: bold;
-  margin-right: 10px;
+  display: block;
+  font-weight: 500;
 }
 
 input[type="text"],
 select {
-  flex-grow: 1;
-  padding: 7px;
+  width: 280px;
+  padding: 7px 10px;
   border: 1px solid #88c8e8;
   border-radius: 5px;
   background-color: #f9f9f9;
-  margin-right: 19px;
-  width: 300px; /* Opcional: ancho del input de destinatarios */
-
-  
+  font-size: 14px;
 }
 
 /* Estilos de botones ajustados */
 .botones {
   display: flex;
   justify-content: space-between;
+  width: 100%; /* ← esto hace que usen todo el ancho disponible */
   margin-top: 20px;
 }
 
@@ -136,8 +136,6 @@ button#volver {
   color: #fff;
 }
 
-
-
 button[type="submit"] {
   background-color: #1a8cd8;
   color: #fff;
@@ -145,14 +143,18 @@ button[type="submit"] {
 
 .campo-destinatario {
   display: flex;
-  flex-grow: 1;
+  flex-direction: column; /* ← así el input y el <small> van uno debajo del otro */
+  width: 100%; /* para que ocupe todo el ancho disponible */
+  margin-top: 5px;
+  font-size: 16px;
 }
 
 .campo-destinatario small {
-  font-size: 12px;
+  display: block;
+  margin-bottom: 15px;
   color: #555;
+  font-size: 12px;
 }
-
 
 
 /* Ajustes responsive */
