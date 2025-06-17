@@ -20,8 +20,9 @@
       <div class="campo">
         <label for="destinatarios">Destinatarios:</label>
         <div class="campo-destinatario">
-          <input type="text" id="destinatarios" name="destinatarios" required placeholder="Ingrese emails válidos">
+          <input type="text" id="destinatarios" placeholder="Ingrese emails válidos">
           <small>(emails separados por coma)</small>
+          <span id="error-destinatarios" class="error"></span>
         </div>
       </div>
 
@@ -45,6 +46,7 @@
           VEP Contenedores
         </label>
       </div>
+      <span id="error-reportes" class="error"></span>
 
       <div class="botones">
         <button type="button" id="volver" onclick="window.history.back();">Volver</button>
@@ -55,38 +57,133 @@
     <p id="resultado"></p>
   </main>
 
-  <script>
-    document.getElementById('form-parametros').addEventListener('submit', async function (e) {
-      e.preventDefault();
+  <!-- Modal Confirmación -->
+  <div id="modalConfirmar" class="modal-overlay" style="display:none;">
+    <div class="modal">
+    <p id="mensajeConfirmar"></p>
+    <button id="btnEnviar">Enviar</button>
+    <button id="btnCancelar">Cancelar</button>
+    </div>
+  </div>
 
-      const params = {
-        destinatarios: document.getElementById('destinatarios').value,
+  <!-- Modal Resultado (éxito o error) -->
+  <div id="modalResultado" class="modal-overlay" style="display:none;">
+    <div class="modal">
+    <p id="mensajeResultado"></p>
+    <button id="btnCerrarResultado">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('form-parametros');
+    const modalConfirmar = document.getElementById('modalConfirmar');
+    const modalResultado = document.getElementById('modalResultado');
+    const btnEnviar = document.getElementById('btnEnviar');
+    const btnCancelar = document.getElementById('btnCancelar');
+    const btnCerrarResultado = document.getElementById('btnCerrarResultado');
+    const mensajeConfirmar = document.getElementById('mensajeConfirmar');
+    const mensajeResultado = document.getElementById('mensajeResultado');
+    const resultado = document.getElementById('resultado');
+  
+    const errorDestinatarios = document.getElementById('error-destinatarios');
+    const errorReportes = document.getElementById('error-reportes');
+  
+    let datosFormulario = {}; // guardamos datos tras validación
+
+    // Oculta error si se empieza a escribir destinatarios
+    document.getElementById('destinatarios').addEventListener('input', function () {
+      if (this.value.trim() !== "") {
+        errorDestinatarios.innerText = "";
+      }
+    });
+
+    // Oculta error si se marca cualquier checkbox
+    const checkboxes = [document.getElementById('corrida_especial'), document.getElementById('vep_general'), document.getElementById('vep_contenedores')];
+    checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        if (checkboxes.some(c => c.checked)) {
+        errorReportes.innerText = "";
+        }
+    });
+    });
+  
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+  
+      // Limpiar errores anteriores
+      errorDestinatarios.innerText = "";
+      errorReportes.innerText = "";
+      resultado.innerText = "";
+  
+      const destinatarios = document.getElementById('destinatarios').value.trim();
+      const checks = [];
+
+      // Llenar el array checks con los nombres de reportes seleccionados
+      if (document.getElementById('corrida_especial').checked) {
+            checks.push("Corrida Especial");
+      }
+      if (document.getElementById('vep_general').checked) {
+          checks.push("VEP General");
+      }
+      if (document.getElementById('vep_contenedores').checked) {
+          checks.push("VEP Contenedores");
+      }
+      
+      let tieneErrores = false;
+    
+      if (destinatarios === "") {
+        errorDestinatarios.innerText = "Debe ingresar al menos un destinatario.";
+        tieneErrores = true;
+      }
+  
+      if (checks.length === 0) {
+        errorReportes.innerText = "Debe seleccionar al menos un reporte.";
+        tieneErrores = true;
+      }
+  
+      if (tieneErrores) return;
+
+      datosFormulario  = {
+        destinatarios: destinatarios,
         corrida_especial: document.getElementById('corrida_especial').checked,
         vep_general: document.getElementById('vep_general').checked,
         vep_contenedores: document.getElementById('vep_contenedores').checked,
       };
 
-      const endpoint = "http://localhost:4447/api/parametros"; 
+      // Mostrar modal de confirmación
+      mensajeConfirmar.innerText = `¿Desea enviar el reporte: ${checks.join(", ")} a ${destinatarios}?`;
+        modalConfirmar.style.display = 'flex';
+    });
+
+    btnCancelar.addEventListener('click', () => {
+      modalConfirmar.style.display = 'none';
+    });
+
+    btnEnviar.addEventListener('click', async () => {
+      modalConfirmar.style.display = 'none';
+
+      const query = new URLSearchParams(datosFormulario);
+      const endpoint = "http://localhost:4447/api/parametros";
 
       try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(params)
-        });
-
+        const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
         const data = await response.json();
 
-        if (response.ok) {
-          document.getElementById("resultado").innerText = `Respuesta: ${data.mensaje}`;
+        if (response.ok && data.estado === "Completed") {
+          mensajeResultado.innerText = "Mail enviado correctamente.";
+          form.reset();
         } else {
-          document.getElementById("resultado").innerText = `Error: ${data.detail || JSON.stringify(data)}`;
+          mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
         }
       } catch (error) {
-        document.getElementById("resultado").innerText = `Error de conexión: ${error.message}`;
+        mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
       }
+
+      modalResultado.style.display = 'flex';
+    });
+        
+    btnCerrarResultado.addEventListener('click', () => {
+      modalResultado.style.display = 'none';
     });
   </script>
 </body>

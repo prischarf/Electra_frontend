@@ -86,6 +86,7 @@ h1 {
   align-items: center;
   flex-direction: column; /* ← importante */
   font-size: 15px;
+  margin-top: 3px;
 }
 
 .campo label {
@@ -151,11 +152,41 @@ button[type="submit"] {
 
 .campo-destinatario small {
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: 3px;
   color: #555;
   font-size: 12px;
 }
 
+#resultado {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.error {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 2px;
+  display: block;
+}
 
 /* Ajustes responsive */
 @media (max-width: 600px) {
