@@ -20,19 +20,19 @@
         <div class="botones">
             <a href="Login_Admin.html" title="Volver">
                 <img src="Imagenes/Flecha_Volver.png" alt="Icono Volver" class="icono-volver" />
-              </a>
-              <a href="Form_Stock_Softland.html" class="boton">
+            </a>
+            <a href="Form_Stock_Softland.html" class="boton">
                 Stock Softland
                 <span class="tooltip-text">Reportes:<br>
                         1. Stock Softland</span>
-              </a>
+            </a>
             
-              <a href="Form_Stock_RG.html" class="boton">
+            <a href="Form_Stock_RG.html" class="boton">
                 Stock Río Grande
                 <span class="tooltip-text">Reportes:<br>
                     1. Stock Río Grande<br>
                     2. Stock Equipos Mes
-              </a>
+            </a>
         </div>
     </main>
     <script>
@@ -56,7 +56,25 @@
             if (!icono.contains(e.target) && !botonCerrar.contains(e.target)) {
             botonCerrar.classList.remove('visible');
             }
-        });
+        }); 
+        let timeout;
+    const tiempoInactividad = 10 * 60 * 1000; // 10 minutos
+
+    function mostrarMensajeYRedirigir() {
+        alert("Estuviste inactivo por 10 minutos. Serás redirigido al inicio de sesión.");
+      window.location.href = "Index.html"; // Cambiá esto por la URL real de tu login
+    }
+
+    function reiniciarTemporizador() {
+        clearTimeout(timeout);
+        timeout = setTimeout(mostrarMensajeYRedirigir, tiempoInactividad);
+    }
+
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evento => {
+        document.addEventListener(evento, reiniciarTemporizador);
+    });
+
+    window.onload = reiniciarTemporizador;
     </script>
 </body>
 </html>
