@@ -75,6 +75,25 @@
   </div>
 
   <script>
+     // --- SCRIPT CONTROL DE SESIÓN (INACTIVIDAD) ---
+  let timeout;
+  const tiempoInactividad = 10 * 60 * 1000; // 10 minutos
+
+  function mostrarMensajeYRedirigir() {
+    alert("Estuviste inactivo por 10 minutos. Serás redirigido al inicio de sesión.");
+    window.location.href = "Index.html"; // Cambiar por URL real
+  }
+
+  function reiniciarTemporizador() {
+    clearTimeout(timeout);
+    timeout = setTimeout(mostrarMensajeYRedirigir, tiempoInactividad);
+  }
+
+  ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evento => {
+    document.addEventListener(evento, reiniciarTemporizador);
+  });
+  window.onload = reiniciarTemporizador;
+
     const form = document.getElementById('form-parametros');
     const modalConfirmar = document.getElementById('modalConfirmar');
     const modalResultado = document.getElementById('modalResultado');

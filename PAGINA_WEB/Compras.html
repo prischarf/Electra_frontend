@@ -108,6 +108,25 @@
                 botonCerrar.classList.remove('visible');
                 }
             });
+
+            let timeout;
+    const tiempoInactividad = 10 * 60 * 1000; // 10 minutos
+
+    function mostrarMensajeYRedirigir() {
+        alert("Estuviste inactivo por 10 minutos. Serás redirigido al inicio de sesión.");
+      window.location.href = "Index.html"; // Cambiá esto por la URL real de tu login
+    }
+
+    function reiniciarTemporizador() {
+        clearTimeout(timeout);
+        timeout = setTimeout(mostrarMensajeYRedirigir, tiempoInactividad);
+    }
+
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evento => {
+        document.addEventListener(evento, reiniciarTemporizador);
+    });
+
+    window.onload = reiniciarTemporizador;
     </script>
 </body>
 </html>
