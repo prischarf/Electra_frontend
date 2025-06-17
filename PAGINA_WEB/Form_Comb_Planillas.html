@@ -12,8 +12,8 @@
   </header>
 
   <main class="contenedor">
-    <h1>CARGAR Y ENVIAR ALERTA DE COMBINACIÓN PLANILLAS</h1>
-    <p>Se cargará Combinación Planillas y se enviará una alerta por correo.</p>
+    <h1>CARGAR Y ENVIAR ALERTA DE COMBINACIÓN DE PLANILLAS</h1>
+    <p>Se cargarán planillas de Kits,  y se enviará una alerta por correo.</p>
 
     <form id="form-parametros" class="formulario">
       
@@ -61,16 +61,8 @@
   <div id="modalConfirmar" class="modal-overlay" style="display:none;">
     <div class="modal">
     <p id="mensajeConfirmar"></p>
-    <button id="btnEnviar">Enviar</button>
     <button id="btnCancelar">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- Modal Resultado (éxito o error) -->
-  <div id="modalResultado" class="modal-overlay" style="display:none;">
-    <div class="modal">
-    <p id="mensajeResultado"></p>
-    <button id="btnCerrarResultado">Cerrar</button>
+    <button id="btnEnviar">Enviar</button>
     </div>
   </div>
 
@@ -163,7 +155,7 @@
       modalConfirmar.style.display = 'none';
 
       const query = new URLSearchParams(datosFormulario);
-      const endpoint = "http://localhost:4447/api/parametros";
+      const endpoint = "http://localhost:4447/compras/combinacion_planillas/orquestar";
 
       try {
         const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
