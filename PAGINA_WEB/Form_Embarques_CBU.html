@@ -37,7 +37,16 @@
       <button id="btnEnviar">Enviar</button>
       </div>
     </div>
-  
+  </div>
+
+  <!-- Modal Resultado -->
+  <div id="modalResultado" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <p id="mensajeResultado"></p>
+      <button id="btnCerrarResultado">Cerrar</button>
+    </div>
+  </div>
+
   <script>
      // --- SCRIPT CONTROL DE SESIÓN (INACTIVIDAD) ---
   let timeout;
@@ -66,51 +75,40 @@
     const mensajeConfirmar = document.getElementById('mensajeConfirmar');
     const mensajeResultado = document.getElementById('mensajeResultado');
     const resultado = document.getElementById('resultado');
-  
     const errorReportes = document.getElementById('error-reportes');
-  
-    let datosFormulario = {}; // guardamos datos tras validación
 
-    // Oculta error si se marca cualquier checkbox
+    let datosFormulario = {};
+
     const checkboxes = [document.getElementById('corridaEspecial')];
     checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
+      checkbox.addEventListener('change', () => {
         if (checkboxes.some(c => c.checked)) {
-        errorReportes.innerText = "";
+          errorReportes.innerText = "";
         }
+      });
     });
-    });
-  
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-  
-      // Limpiar errores anteriores
       errorReportes.innerText = "";
       resultado.innerText = "";
 
       const checks = [];
-
-      // Llenar el array checks con los nombres de reportes seleccionados
       if (document.getElementById('corridaEspecial').checked) {
-            checks.push("Corrida Especial");
+        checks.push("Corrida Especial");
       }
 
-      let tieneErrores = false;
-  
       if (checks.length === 0) {
         errorReportes.innerText = "Debe seleccionar una opción.";
-        tieneErrores = true;
+        return;
       }
-  
-      if (tieneErrores) return;
 
-      datosFormulario  = {
+      datosFormulario = {
         corrida_especial: document.getElementById('corridaEspecial').checked
       };
 
-      // Mostrar modal de confirmación
-      mensajeConfirmar.innerText = `¿Desea enviar el reporte: ${checks.join(", ")} a ${destinatarios}?`;
-        modalConfirmar.style.display = 'flex';
+      mensajeConfirmar.innerText = `¿Desea ejecutar ${checks.join(", ")}?`;
+      modalConfirmar.style.display = 'flex';
     });
 
     btnCancelar.addEventListener('click', () => {
@@ -128,18 +126,18 @@
         const data = await response.json();
 
         if (response.ok && data.estado === "Completed") {
-          mensajeResultado.innerText = "Mail enviado correctamente.";
+          mensajeResultado.innerText = "Reporte ejecutado correctamente.";
           form.reset();
         } else {
-          mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
+          mensajeResultado.innerText = "No se ha podido ejecutar el reporte, consulte con algún miembro de IT.";
         }
       } catch (error) {
-        mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
+        mensajeResultado.innerText = "No se ha podido ejecutar el reporte, consulte con algún miembro de IT.";
       }
 
       modalResultado.style.display = 'flex';
     });
-        
+
     btnCerrarResultado.addEventListener('click', () => {
       modalResultado.style.display = 'none';
     });
