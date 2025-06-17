@@ -46,7 +46,10 @@
         </div>
 
         <div class="error-container">
-          <input type="password" id="contrasena" placeholder="Contraseña">
+          <div class="contenedor-password">
+            <input type="password" id="contrasena" placeholder="Contraseña">
+            <img src="Imagenes/ojo_abierto.png" alt="Mostrar" id="togglePassword" class="toggle-password">
+          </div>
           <div id="error-contrasena" class="error-msg"></div>
         </div>
 
@@ -104,6 +107,14 @@
           }
         });
       });
+    });
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("contrasena");
+
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.src = isPassword ? "Imagenes/ojo_cerrado.png" : "Imagenes/ojo_abierto.png";
     });
   </script>
 </body>
