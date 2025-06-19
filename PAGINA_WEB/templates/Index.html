@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Inicio | Reportes ADS</title>
-  <link rel="stylesheet" href="css/Estilo.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Estilo.css') }}" />
 </head>
 <body>
   <div class="contenedor">
     <!-- Logo en la esquina superior izquierda -->
     <header class="encabezado">
-      <img src="Imagenes/Logo_ADS.png" alt="Logo ADS" class="logo" />
-    </header>
+      <img src="{{ url_for('static', filename='Imagenes/Logo_ADS.png') }}" alt="Logo ADS" class="logo" />
+    </header> 
 
     <!-- Contenido centrado y más arriba -->
     <main class="contenido">
@@ -22,10 +22,10 @@
 
       <!-- Botones alineados horizontalmente -->
       <div class="botones">
-        <a class="boton boton-azul" href="Login_Compras.html">
+        <a class="boton boton-azul" href="{{ url_for('login_compras') }}">
           Compras <span class="flecha blanca">❯</span>
         </a>
-        <a class="boton boton-blanco" href="Login_Admin.html">
+        <a class="boton boton-blanco" href="{{ url_for('login_admin') }}">
           Administración <span class="flecha gris">❯</span>
         </a>
       </div>
