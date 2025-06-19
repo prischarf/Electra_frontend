@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportes Compras</title>
-    <link rel="stylesheet" href="css/Compras.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Compras.css') }}">
 </head>
 <body>
     <header>
-        <img src="Imagenes/Logo_ADS.png" alt="ACS AiresDelSur" class="logo">
+        <img src="{{ url_for('static', filename='Imagenes/Logo_ADS.png') }}" alt="ACS AiresDelSur" class="logo">
     <div class="usuario-container">
-        <img src="Imagenes/Inicio.png" alt="Usuario" class="usuario-icono" id="usuarioIcono">
+        <img src="{{ url_for('static', filename='Imagenes/Inicio.png') }}" alt="Usuario" class="usuario-icono" id="usuarioIcono">
         <span class="cerrar-sesion-texto oculto" id="cerrarSesion">Cerrar sesión</span>
     </div>
     </header>
@@ -18,10 +18,10 @@
     <main>
         <h1>Reportes Compras</h1>
         <div class="botones">
-            <a href="Login_Compras.html" title="Volver">
-                <img src="Imagenes/Flecha_Volver.png" alt="Icono Volver" class="icono-volver" />
+            <a href="{{ url_for('login_compras') }}" title="Volver">
+                <img src="{{ url_for('static', filename='Imagenes/Flecha_Volver.png') }}" alt="Icono Volver" class="icono-volver" />
             </a>
-            <a href="Form_Alertas.html" class="boton">
+            <a href="{{ url_for('formulario_alertas') }}" class="boton">
                 Activar/Desactivar alertas
                 <span class="tooltip-text">Parámetros:<br>
                     1. Solo Mostrar<br>
@@ -41,7 +41,7 @@
                 </span>
             </a>
 
-            <a href="Form_Embarques_CBU.html" class="boton">
+            <a href="{{ url_for('formulario_embarques') }}" class="boton">
                 Planilla Embarque CBU
                 <span class="tooltip-text">Carga de planilla.<br> 
                     Parámetros:<br>
@@ -49,7 +49,7 @@
                 </span>
             </a>
 
-            <a href="Form_Nec_Planta_Repuestos.html" class="boton">
+            <a href="{{ url_for('formulario_necplanta') }}" class="boton">
                 Planilla de Repuestos
                 <span class="tooltip-text"> Carga y envía alerta.<br>
                     Parámetros:<br>
@@ -64,7 +64,7 @@
                 </span>
             </a>
 
-            <a href="Form_Comb_Planillas.html" class="boton">
+            <a href="{{ url_for('formulario_combplanillas') }}" class="boton">
                 Combinación de Planillas
                 <span class="tooltip-text">Carga y envía alerta.<br>
                     Parámetros:<br>
@@ -74,7 +74,7 @@
                 </span>
             </a>
 
-            <a href="Form_Kits.html" class="boton">
+            <a href="{{ url_for('formulario_kits') }}" class="boton">
                 Importaciones Kits
                 <span class="tooltip-text">Carga y envía alerta.<br>
                     Parámetros:<br>
@@ -98,7 +98,7 @@
 
             // Ir a la página de inicio al hacer clic en "Cerrar sesión"
             botonCerrar.addEventListener('click', function () {
-                window.location.href = "Index.html";
+                window.location.href = "{{ url_for('index') }}";
             });
 
             // Si hacés clic en cualquier otra parte, ocultar el botón
@@ -114,7 +114,7 @@
 
     function mostrarMensajeYRedirigir() {
         alert("Estuviste inactivo por 10 minutos. Serás redirigido al inicio de sesión.");
-      window.location.href = "Index.html"; // Cambiá esto por la URL real de tu login
+      window.location.href = "{{ url_for('index') }}"; // Cambiá esto por la URL real de tu login
     }
 
     function reiniciarTemporizador() {

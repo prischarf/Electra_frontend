@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login_compras</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Login_Admin.css') }}" />
+  <style>
+    .error-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+
+    .error-container input {
+      margin-bottom: 2px;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 0.85em;
+      margin: 0;
+      height: 1em;
+    }
+  </style>
+</head>
+<body class="pagina-login">
+  <div class="login-container">
+    <header class="header-login">
+      <img src="{{ url_for('static', filename='Imagenes/Logo_ADS.png') }}" alt="Logo ACS" class="logo-acs" />
+    </header>
+
+    <div class="login-box">
+      <a href="{{ url_for('index') }}" title="Volver">
+        <img src="{{ url_for('static', filename='Imagenes/Flecha_Volver.png') }}" alt="Icono Volver" class="icono-volver" />
+      </a>
+      <div class="login-left">
+        <img src="{{ url_for('static', filename='Imagenes/Inicio.png') }}" alt="Icono Usuario" class="icono-usuario" />
+      </div>
+      <div class="login-right">
+        <h1>Iniciar sesión</h1>
+
+        <div class="error-container">
+          <input type="text" id="usuario" placeholder="Usuario">
+          <div id="error-usuario" class="error-msg"></div>
+        </div>
+
+        <div class="error-container">
+          <div class="contenedor-password">
+            <input type="password" id="contrasena" placeholder="Contraseña">
+            <img src="{{ url_for('static', filename='Imagenes/ojo_abierto.png') }}" alt="Mostrar" id="togglePassword" class="toggle-password">
+          </div>
+          <div id="error-contrasena" class="error-msg"></div>
+        </div>
+
+        <button type="button" id="btn-acceder" class="btn-acceder btn-disabled" disabled>Acceder</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function verificarLogin() {
+      const usuario = document.getElementById("usuario").value.trim();
+      const contrasena = document.getElementById("contrasena").value.trim();
+
+      const errorUsuario = document.getElementById("error-usuario");
+      const errorContrasena = document.getElementById("error-contrasena");
+
+      errorUsuario.textContent = "";
+      errorContrasena.textContent = "";
+
+      let valid = true;
+
+      if (usuario === "") {
+        errorUsuario.textContent = "Complete el campo";
+        valid = false;
+      }
+
+      if (contrasena === "") {
+        errorContrasena.textContent = "Complete el campo";
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      fetch("/iniciar_admin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `usuario=${encodeURIComponent(usuario)}&contraseña=${encodeURIComponent(contrasena)}`
+      })
+        .then(response => response.text())
+        .then(data => {
+          if (data.includes("✔")) {
+            window.location.href = data.replace("✔", "").trim();
+          } else {
+            errorUsuario.textContent = "";
+            errorContrasena.textContent = "";
+            if (data.includes("Usuario no registrado")) {
+              errorUsuario.textContent = "Usuario no registrado";
+            } else if (data.includes("Contraseña incorrecta")) {
+              errorContrasena.textContent = "Contraseña incorrecta";
+            }
+          }
+        })
+        .catch(error => {
+          console.error("Error en la verificación:", error);
+        });
+    }
+
+    // Enter activa login
+    document.addEventListener("DOMContentLoaded", function () {
+      ["usuario", "contrasena"].forEach(id => {
+        const input = document.getElementById(id);
+        
+        input.addEventListener("input", actualizarEstadoBoton);
+        
+        input.addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            verificarLogin();
+          }
+        });
+      });
+      document.getElementById("btn-acceder").addEventListener("click", verificarLogin);
+      actualizarEstadoBoton();  // por si ya había texto al cargar
+    });
+
+    // Mostrar / ocultar contraseña
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("contrasena");
+    togglePassword.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+      passwordInput.type = isPassword ? "text" : "password";
+      togglePassword.src = isPassword 
+        ? "{{ url_for('static', filename='Imagenes/ojo_cerrado.png') }}" 
+        : "{{ url_for('static', filename='Imagenes/ojo_abierto.png') }}";
+    });
+    
+     // Inactividad
+    let timeout;
+    const tiempoInactividad = 10 * 60 * 1000;
+
+    function mostrarMensajeYRedirigir() {
+      alert("Estuviste inactivo por 10 minutos. Serás redirigido al inicio de sesión.");
+      window.location.href = "{{ url_for('index') }}";
+    }
+
+    function reiniciarTemporizador() {
+      clearTimeout(timeout);
+      timeout = setTimeout(mostrarMensajeYRedirigir, tiempoInactividad);
+    }
+
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evento => {
+      document.addEventListener(evento, reiniciarTemporizador);
+    });
+
+    window.onload = reiniciarTemporizador;
+
+    function actualizarEstadoBoton() {
+      const usuario = document.getElementById("usuario").value.trim();
+      const contrasena = document.getElementById("contrasena").value.trim();
+      const boton = document.getElementById("btn-acceder");
+
+      if (usuario !== "" && contrasena.length >= 8) {
+        boton.disabled = false;
+        boton.classList.remove("btn-disabled");
+      } else {
+        boton.disabled = true;
+        boton.classList.add("btn-disabled");
+      }
+    }
+  </script>
+</body>
+</html>

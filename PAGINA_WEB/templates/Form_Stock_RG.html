@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alerta Stock Río Grande</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Form_Stock_RG.css') }}">
+</head>
+<body>
+  <header class="header">
+    <img src="{{ url_for('static', filename='Imagenes/Logo_ADS.png') }}" alt="ACS AiresDelSur" class="logo">
+    
+  </header>
+
+  <main class="contenedor">
+    <h1>ENVIAR REPORTE DE STOCK RIO GRANDE</h1>
+    <p>Se enviará un correo con los depósitos, productos y sus respectivas cantidades de stock.</p>
+    <form id="form-stock-rg" class="formulario">
+      <label for="destinatarios">Destinatarios:</label>
+      <input type="text" id="destinatarios" placeholder="Ingrese emails válidos">
+      <small>(emails separados por coma)</small>
+      <span id="error-destinatarios" class="error"></span>
+
+      <label for="stockDepositoRg">
+        <input type="checkbox" id="stockDepositoRg"> Stock Depósito Río Grande
+      </label>
+
+      <label for="equiposMes">
+        <input type="checkbox" id="equiposMes"> Stock Equipos Mes
+        <span id="error-reportes" class="error"></span>
+      </label>
+
+      <label>Fecha:</label>
+      <div class="fecha-group">
+        <div class="fecha-item">
+          <select id="dia">
+            <option value="">Día</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+          </select>
+        </div>
+
+        <div class="fecha-item">
+          <select id="mes">
+            <option value="">Mes</option>
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+
+        <div class="fecha-item">
+          <select id="anio">
+            <option value="">Año</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="botones">
+        <button type="button" id="volver" onclick="window.history.back();">Volver</button>
+        <button type="submit">Confirmar</button>
+      </div>
+    </form>
+
+    <p id="resultado"></p>
+  </main>
+  <!-- Modal Confirmación -->
+  <div id="modalConfirmar" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <p id="mensajeConfirmar"></p>
+      <button id="btnCancelar">Cancelar</button>
+      <button id="btnEnviar">Enviar</button>
+    </div>
+  </div>
+
+  <!-- Modal Resultado (éxito o error) -->
+  <div id="modalResultado" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <p id="mensajeResultado"></p>
+      <button id="btnCerrarResultado">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+     // --- SCRIPT CONTROL DE SESIÓN (INACTIVIDAD) ---
+  let timeout;
+  const tiempoInactividad = 10 * 60 * 1000; // 10 minutos
+
+  function mostrarMensajeYRedirigir() {
+    alert("Estuviste inactivo por 10 minutos. Serás redirigido al inicio de sesión.");
+    window.location.href = "{{ url_for('index') }}"; // Cambiar por URL real
+  }
+
+  function reiniciarTemporizador() {
+    clearTimeout(timeout);
+    timeout = setTimeout(mostrarMensajeYRedirigir, tiempoInactividad);
+  }
+
+  ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evento => {
+    document.addEventListener(evento, reiniciarTemporizador);
+  });
+  window.onload = reiniciarTemporizador;
+    const form = document.getElementById('form-stock-rg');
+    const modalConfirmar = document.getElementById('modalConfirmar');
+    const modalResultado = document.getElementById('modalResultado');
+    const btnEnviar = document.getElementById('btnEnviar');
+    const btnCancelar = document.getElementById('btnCancelar');
+    const btnCerrarResultado = document.getElementById('btnCerrarResultado');
+    const mensajeConfirmar = document.getElementById('mensajeConfirmar');
+    const mensajeResultado = document.getElementById('mensajeResultado');
+    const resultado = document.getElementById('resultado');
+  
+    const errorDestinatarios = document.getElementById('error-destinatarios');
+    const errorReportes = document.getElementById('error-reportes');
+  
+    let datosFormulario = {}; // guardamos datos tras validación
+      // Oculta el mensaje de error cuando se empieza a escribir destinatarios
+    document.getElementById('destinatarios').addEventListener('input', function () {
+      if (this.value.trim() !== "") {
+        errorDestinatarios.innerText = "";
+      }
+    });
+
+    // Oculta el mensaje de error si se selecciona algún checkbox
+    const checkboxes = [document.getElementById('stockDepositoRg'), document.getElementById('equiposMes')];
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        if (checkboxes.some(c => c.checked)) {
+          errorReportes.innerText = "";
+        }
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Limpiar mensajes de error anteriores
+      errorDestinatarios.innerText = "";
+      errorReportes.innerText = "";
+      resultado.innerText = "";
+
+      const destinatarios = document.getElementById('destinatarios').value.trim();
+      const checks = [];
+  
+      if (document.getElementById('stockDepositoRg').checked) {
+        checks.push("Stock Depósito Río Grande");
+      }
+      if (document.getElementById('equiposMes').checked) {
+        checks.push("Stock Equipos Mes");
+      }
+  
+      let tieneErrores = false;
+  
+      if (checks.length === 0) {
+        errorReportes.innerText = "Debe seleccionar al menos un reporte.";
+        tieneErrores = true;
+      }
+  
+      if (destinatarios === "") {
+        errorDestinatarios.innerText = "Debe ingresar al menos un destinatario.";
+        tieneErrores = true;
+      }
+  
+      if (tieneErrores) return;
+  
+      datosFormulario = {
+        dest: destinatarios,
+        stock_deposito_rg: document.getElementById('stockDepositoRg').checked,
+        equipos_mes: document.getElementById('equiposMes').checked,
+        dia: document.getElementById('dia').value,
+        mes: document.getElementById('mes').value,
+        anio: document.getElementById('anio').value
+      };
+  
+      mensajeConfirmar.innerText = `¿Desea enviar el reporte: ${checks.join(", ")} a ${destinatarios}?`;
+      modalConfirmar.style.display = 'flex';
+    });
+  
+    btnCancelar.addEventListener('click', () => {
+      modalConfirmar.style.display = 'none';
+    });
+  
+    btnEnviar.addEventListener('click', async () => {
+      modalConfirmar.style.display = 'none';
+  
+      const query = new URLSearchParams(datosFormulario);
+      const endpoint = 'http://localhost:4447/administracion/stock_rga/alertas';
+  
+      try {
+        const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
+        const data = await response.json();
+  
+        if (response.ok && data.estado === "Completed") {
+          mensajeResultado.innerText = "Mail enviado correctamente.";
+          form.reset();
+        } else {
+          mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
+        }
+      } catch (error) {
+        mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
+      }
+  
+      modalResultado.style.display = 'flex';
+    });
+  
+    btnCerrarResultado.addEventListener('click', () => {
+      modalResultado.style.display = 'none';
+    });
+  </script>
+  
+</body>
+</html>
