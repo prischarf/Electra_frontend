@@ -6,7 +6,7 @@
   <title>Alerta Stock Río Grande</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/Form_Stock_RG.css') }}">
 </head>
-<body>
+<body data-usuario="{{ usuario }}">
   <header class="header">
     <img src="{{ url_for('static', filename='Imagenes/Logo_ADS.png') }}" alt="ACS AiresDelSur" class="logo">
     
@@ -141,6 +141,7 @@
     document.addEventListener(evento, reiniciarTemporizador);
   });
   window.onload = reiniciarTemporizador;
+    const usuario = document.body.dataset.usuario || "desconocido";
     const form = document.getElementById('form-stock-rg');
     const modalConfirmar = document.getElementById('modalConfirmar');
     const modalResultado = document.getElementById('modalResultado');
@@ -225,18 +226,23 @@
       modalConfirmar.style.display = 'none';
   
       const query = new URLSearchParams(datosFormulario);
-      const endpoint = 'http://localhost:4447/administracion/stock_rga/alertas';
+      const endpoint = 'http://192.168.1.13:4443/administracion/stock_rga/alertas';
   
       try {
-        const response = await fetch(`${endpoint}?${query}`, { method: 'GET' });
+        const response = await fetch(`${endpoint}?${query}`, { 
+          method: 'GET', 
+          headers: {
+            'X-Usuario': usuario    // ← aquí viaja el nombre del usuario
+          }
+        });
         const data = await response.json();
-  
+        /*
         if (response.ok && data.estado === "Completed") {
           mensajeResultado.innerText = "Mail enviado correctamente.";
           form.reset();
         } else {
           mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
-        }
+        }*/
       } catch (error) {
         mensajeResultado.innerText = "No se ha podido enviar el mail, consulte con algún miembro de IT.";
       }
